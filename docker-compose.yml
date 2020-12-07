@@ -1,0 +1,27 @@
+version: "3.1"
+services:
+  front:
+    build: front
+    restart: always
+    ports:
+      - "3000:3000"
+    links:
+      - back
+  back:
+    build: back
+    restart: always
+    ports:
+      - "9000:9000"
+    links:
+      - db
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: oisin
+      POSTGRES_DB: oisin
+    volumes:
+      - /tmp/postgres:/var/lib/postgresql/data
+    ports:
+      - 8080:5432
